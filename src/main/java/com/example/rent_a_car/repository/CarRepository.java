@@ -1,5 +1,6 @@
 package com.example.rent_a_car.repository;
 
+import aj.org.objectweb.asm.commons.Remapper;
 import com.example.rent_a_car.dto.Response.CarResponse;
 import com.example.rent_a_car.entity.Brand;
 import com.example.rent_a_car.entity.Car;
@@ -23,4 +24,8 @@ public interface CarRepository extends JpaRepository<Car,Long> {
     Optional<List<Car>> findByFuel(Fuel fuel);
     Optional<List<Car>> findByBrandAndCategory(Brand brand, Category category);
     Optional<List<Car>> findByBrandAndFuel(Brand brand, Fuel fuel);
+    @Query("SELECT c FROM Car c WHERE c.active = true")
+    Optional<List<Car>> getActiveCars();
+    @Query("SELECT c FROM Car c WHERE c.active = false ")
+    Optional<List<Car>> getNonActiveCars();
 }

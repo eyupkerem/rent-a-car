@@ -23,6 +23,17 @@ public class CarController {
         return ResponseEntity.ok(cars);
     }
 
+    @GetMapping("/active-cars")
+    public ResponseEntity<List<CarResponse>> getActiveCars(){
+        List<CarResponse> activeCars = carService.getActiveCars();
+        return ResponseEntity.ok(activeCars);
+    }
+    @GetMapping("/non-active-cars")
+    public ResponseEntity<List<CarResponse>> getNonActiveCars(){
+        List<CarResponse> activeCars = carService.getNonActiveCars();
+        return ResponseEntity.ok(activeCars);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<CarResponse> findById(@PathVariable Long id){
         CarResponse carResponse = carService.findById(id);
@@ -59,6 +70,18 @@ public class CarController {
         List<CarResponse> cars = carService.findByBrandAndFuel(brandId,fuelId);
         return ResponseEntity.ok(cars);
     }
+
+//    @GetMapping("/cars")
+//    public ResponseEntity<List<CarResponse>> findCars(
+//            @RequestParam(required = false) Long brandId,
+//            @RequestParam(required = false) Long categoryId,
+//            @RequestParam(required = false) Long fuelId,
+//            @RequestParam(required = false) Long gearId) {
+//
+//        List<CarResponse> cars = carService.findCarsByFilters(brandId, categoryId, fuelId, gearId);
+//        return ResponseEntity.ok(cars);
+//    }
+
 
 
 

@@ -33,6 +33,25 @@ public class CarServiceImpl implements CarService {
                 .collect(Collectors.toList());
     }
 
+    public List<CarResponse> getActiveCars() {
+        List<Car> activeCarList = carRepository.getActiveCars()
+                .orElseThrow(() -> new ResourceNotFoundException(CAR_NOT_FOUND));
+
+        return activeCarList.stream()
+                .map(carMapper :: toCarResponse)
+                .collect(Collectors.toList());
+
+    }
+
+    public List<CarResponse> getNonActiveCars() {
+        List<Car> nonActiveCarList = carRepository.getNonActiveCars()
+                .orElseThrow(() -> new ResourceNotFoundException(CAR_NOT_FOUND));
+
+        return nonActiveCarList.stream()
+                .map(carMapper :: toCarResponse)
+                .collect(Collectors.toList());
+    }
+
     public CarResponse findById(Long id) {
         return carRepository.findById(id)
                 .map(carMapper :: toCarResponse)
@@ -129,6 +148,8 @@ public class CarServiceImpl implements CarService {
                 .map(carMapper::toCarResponse)
                 .collect(Collectors.toList());
     }
+
+
 
     public CarResponse delete(Long id) {
         Car car = carRepository.findById(id)
