@@ -23,6 +23,8 @@ public class Validations {
     public static final String CAR_NAME_ALREADY_EXIST = "Car name already exist" ;
     public static final String FIELDS_NOT_EMPTY = "All fields must be non-empty";
     public static final String CAR_NOT_AVAILABLE = "Car not available for this dates";
+    public static final String AUTHENTICATION_FAILED = "Giriş başarısız Lütfen kullanıcı adı ve şifre kontrol edin";
+    public static final String INVALID_CREDENTIALS = "INVALID_CREDENTIALS";
 
 
 

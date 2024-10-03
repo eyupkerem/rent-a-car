@@ -3,7 +3,6 @@ package com.example.rent_a_car.controller;
 import com.example.rent_a_car.dto.Response.CarResponse;
 import com.example.rent_a_car.dto.SaveRequest.CarSaveRequest;
 import com.example.rent_a_car.service.CarService;
-import com.example.rent_a_car.service.impl.CarServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -57,32 +56,17 @@ public class CarController {
         return ResponseEntity.ok(cars);
     }
 
-    @GetMapping("/brand/{brandId}/category/{categoryId}")
-    public ResponseEntity<List<CarResponse>> findByBrandAndCategory(@PathVariable Long brandId
-                                                                     , @PathVariable Long categoryId){
-        List<CarResponse> cars = carService.findByBrandAndCategory(brandId,categoryId);
+
+    @GetMapping("/cars")
+    public ResponseEntity<List<CarResponse>> findCars(
+            @RequestParam(required = false) Long brandId,
+            @RequestParam(required = false) Long categoryId,
+            @RequestParam(required = false) Long fuelId,
+            @RequestParam(required = false) Long gearId) {
+
+        List<CarResponse> cars = carService.findCarsByFilters(brandId, categoryId, fuelId, gearId);
         return ResponseEntity.ok(cars);
     }
-
-    @GetMapping("/brand/{brandId}/fuel/{fuelId}")
-    public ResponseEntity<List<CarResponse>> findByBrandAndFuel(@PathVariable Long brandId
-                                                                     , @PathVariable Long fuelId){
-        List<CarResponse> cars = carService.findByBrandAndFuel(brandId,fuelId);
-        return ResponseEntity.ok(cars);
-    }
-
-//    @GetMapping("/cars")
-//    public ResponseEntity<List<CarResponse>> findCars(
-//            @RequestParam(required = false) Long brandId,
-//            @RequestParam(required = false) Long categoryId,
-//            @RequestParam(required = false) Long fuelId,
-//            @RequestParam(required = false) Long gearId) {
-//
-//        List<CarResponse> cars = carService.findCarsByFilters(brandId, categoryId, fuelId, gearId);
-//        return ResponseEntity.ok(cars);
-//    }
-
-
 
 
     @PostMapping
@@ -96,9 +80,4 @@ public class CarController {
         CarResponse car = carService.delete(id);
         return ResponseEntity.ok(car);
     }
-
-
-
-
-
 }

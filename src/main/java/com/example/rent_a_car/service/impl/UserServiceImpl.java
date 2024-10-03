@@ -1,5 +1,7 @@
 package com.example.rent_a_car.service.impl;
 
+import com.example.rent_a_car.config.PasswordEncoderConfig;
+import com.example.rent_a_car.dto.Response.AuthRequest;
 import com.example.rent_a_car.dto.Response.UserResponse;
 import com.example.rent_a_car.dto.SaveRequest.UserSaveRequest;
 import com.example.rent_a_car.dto.UpdateRequest.UserUpdateRequest;
@@ -12,9 +14,13 @@ import com.example.rent_a_car.exception.ResourceNotFoundException;
 import com.example.rent_a_car.mapper.UserMapper;
 import com.example.rent_a_car.repository.RoleRepository;
 import com.example.rent_a_car.repository.UserRepository;
+import com.example.rent_a_car.security.JwtService;
 import com.example.rent_a_car.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -30,6 +36,9 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final UserMapper userMapper;
+    private final PasswordEncoderConfig passwordEncoderConfig;
+    private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
 
     public List<UserResponse> getAll() {
         List<Users> users= userRepository.findAll();
@@ -68,6 +77,8 @@ public class UserServiceImpl implements UserService {
 
         }
         newUser.setRoles(roles);
+        String hashedPassword = passwordEncoderConfig.hashPassword(request.getPassword());
+        newUser.setPassword(hashedPassword);
 
         userRepository.save(newUser);
         return userMapper.toUserResponse(newUser);
@@ -106,5 +117,17 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
 
         return userMapper.toUserResponse(user);
+    }
+
+    public String generateToken(AuthRequest request) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(request.email(), request.password())
+        );
+        if (authentication.isAuthenticated()) {
+            String token = jwtService.generateToken(request.email());
+            return token;
+        } else {
+            throw new ResourceNotFoundException(INVALID_CREDENTIALS);
+        }
     }
 }

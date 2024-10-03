@@ -4,7 +4,6 @@ import com.example.rent_a_car.dto.Response.CategoryResponse;
 import com.example.rent_a_car.dto.SaveRequest.CategorySaveRequest;
 import com.example.rent_a_car.dto.UpdateRequest.CategoryUpdateRequest;
 import com.example.rent_a_car.service.CategoryService;
-import com.example.rent_a_car.service.impl.CategoryServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

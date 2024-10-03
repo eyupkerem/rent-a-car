@@ -28,4 +28,5 @@ public interface CarService {
 
     List<CarResponse> findByBrandAndFuel(Long brandId, Long fuelId);
 
+    List<CarResponse> findCarsByFilters(Long brandId, Long categoryId, Long fuelId, Long gearId);
 }

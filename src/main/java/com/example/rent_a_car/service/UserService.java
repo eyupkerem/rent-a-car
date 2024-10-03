@@ -1,5 +1,6 @@
 package com.example.rent_a_car.service;
 
+import com.example.rent_a_car.dto.Response.AuthRequest;
 import com.example.rent_a_car.dto.Response.UserResponse;
 import com.example.rent_a_car.dto.SaveRequest.UserSaveRequest;
 import com.example.rent_a_car.dto.UpdateRequest.UserUpdateRequest;
@@ -16,4 +17,6 @@ public interface UserService {
     UserResponse deleteById(Long id);
 
     UserResponse update(Long id, UserUpdateRequest request);
+
+    String generateToken(AuthRequest request);
 }

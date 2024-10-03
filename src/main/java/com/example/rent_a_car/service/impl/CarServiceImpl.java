@@ -150,6 +150,14 @@ public class CarServiceImpl implements CarService {
     }
 
 
+    @Override
+    public List<CarResponse> findCarsByFilters(Long brandId, Long categoryId, Long fuelId, Long gearId) {
+        List<Car> cars = carRepository.findCarsByFilters(brandId, categoryId, fuelId, gearId);
+
+        return cars.stream()
+                .map(carMapper::toCarResponse)
+                .collect(Collectors.toList());
+    }
 
     public CarResponse delete(Long id) {
         Car car = carRepository.findById(id)

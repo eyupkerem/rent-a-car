@@ -4,7 +4,6 @@ import com.example.rent_a_car.dto.Response.BrandResponse;
 import com.example.rent_a_car.dto.SaveRequest.BrandSaveRequest;
 import com.example.rent_a_car.dto.UpdateRequest.BrandUpdateRequest;
 import com.example.rent_a_car.service.BrandService;
-import com.example.rent_a_car.service.impl.BrandServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,5 +47,4 @@ public class BrandController {
         BrandResponse brand = brandService.deleteById(id);
         return ResponseEntity.ok(brand);
     }
-
 }

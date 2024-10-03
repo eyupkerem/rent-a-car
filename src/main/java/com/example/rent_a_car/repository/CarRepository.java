@@ -28,4 +28,15 @@ public interface CarRepository extends JpaRepository<Car,Long> {
     Optional<List<Car>> getActiveCars();
     @Query("SELECT c FROM Car c WHERE c.active = false ")
     Optional<List<Car>> getNonActiveCars();
+
+    @Query("SELECT c FROM Car c WHERE " +
+            "(:brandId IS NULL OR c.brand.id = :brandId) AND " +
+            "(:categoryId IS NULL OR c.category.id = :categoryId) AND " +
+            "(:fuelId IS NULL OR c.fuel.id = :fuelId) AND " +
+            "(:gearId IS NULL OR c.gear.id = :gearId)")
+    List<Car> findCarsByFilters(@Param("brandId") Long brandId,
+                                @Param("categoryId") Long categoryId,
+                                @Param("fuelId") Long fuelId,
+                                @Param("gearId") Long gearId);
+
 }

@@ -3,11 +3,8 @@ package com.example.rent_a_car.controller;
 import com.example.rent_a_car.dto.Response.FuelResponse;
 import com.example.rent_a_car.dto.SaveRequest.FuelSaveRequest;
 import com.example.rent_a_car.dto.UpdateRequest.FuelUpdateRequest;
-import com.example.rent_a_car.entity.Fuel;
 import com.example.rent_a_car.service.FuelService;
-import com.example.rent_a_car.service.impl.FuelServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.ap.shaded.freemarker.core.ReturnInstruction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,8 +39,6 @@ public class FuelController {
         FuelResponse fuel = fuelService.update(id , request);
         return ResponseEntity.ok(fuel);
     }
-
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity<FuelResponse> deleteById(@PathVariable Long id){

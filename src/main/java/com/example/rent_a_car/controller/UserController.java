@@ -1,5 +1,6 @@
 package com.example.rent_a_car.controller;
 
+import com.example.rent_a_car.dto.Response.AuthRequest;
 import com.example.rent_a_car.dto.Response.UserResponse;
 import com.example.rent_a_car.dto.SaveRequest.UserSaveRequest;
 import com.example.rent_a_car.dto.UpdateRequest.UserUpdateRequest;
@@ -47,4 +48,13 @@ public class UserController {
         UserResponse user = userService.deleteById(id);
         return ResponseEntity.ok(user);
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> generateToken(@RequestBody AuthRequest request){
+        String token = userService.generateToken(request);
+        return ResponseEntity.ok(token);
+    }
+
+
+
 }
