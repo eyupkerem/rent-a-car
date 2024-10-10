@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+        }
+
+        .order-details {
+            margin-top: 20px;
+        }
+
+        .order-details p {
+            margin: 5px 0;
+        }
+
+        .total {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Rezervasyon Detayları</h1>
+    <p>Merhaba, <strong> <span th:text="${customerName}" /> </strong>!</p>
+    <p> Rezervasyon detaylarınız aşagıdaki gibidir</p>
+
+<!--    <div class="order-details">-->
+<!--        <p><strong>Araba : </strong> <span th:text="${carName}"/> </p>-->
+<!--        <p><strong>Arabanın Markası:</strong> <span th:text="${brandName}"/> </p>-->
+
+<!--        <p><strong>Rezervasyon Detayları:</strong></p>-->
+
+
+<!--        <p class="total"><strong>Tutar:</strong> <span th:text="${price}" />  TL</p>-->
+<!--    </div>-->
+    <div class="order-details">
+        <p><strong>Araba: </strong><span th:text="${carName}" /></p>
+        <p><strong>Arabanın Markası: </strong><span th:text="${brandName}" /></p>
+        <p><strong>Vites: </strong><span th:text="${gearType}" /></p>
+        <p><strong>Başlangıç Tarihi: </strong><span th:text="${startDate}" /></p>
+        <p><strong>Bitiş Tarihi: </strong><span th:text="${endDate}" /></p>
+        <p class="total"><strong>Tutar: </strong><span th:text="${price}" /> TL</p>
+    </div>
+
+    <p>Güvenli sürüşler dileriz!</p>
+    <p>Bizi tercih ettiğiniz için teşekkürler .</p>
+    <div class="footer">
+        <p>© 2024 Şirket Adı. Tüm hakları saklıdır.</p>
+    </div>
+</div>
+</body>
+</html>

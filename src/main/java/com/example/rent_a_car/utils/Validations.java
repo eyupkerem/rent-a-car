@@ -25,6 +25,7 @@ public class Validations {
     public static final String CAR_NOT_AVAILABLE = "Car not available for this dates";
     public static final String AUTHENTICATION_FAILED = "Giriş başarısız Lütfen kullanıcı adı ve şifre kontrol edin";
     public static final String INVALID_CREDENTIALS = "INVALID_CREDENTIALS";
+    public static final String EMAIL_COULD_NOT_SEND = "Email could not send";
 
 
 

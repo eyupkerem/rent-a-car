@@ -35,7 +35,7 @@ public class SecurityConfig {
                           //USER
                           .requestMatchers(HttpMethod.GET, "/api/user").hasAuthority("ROLE_ADMIN")
                           .requestMatchers(HttpMethod.GET, "/api/user/*").hasAuthority("ROLE_ADMIN")
-                          .requestMatchers(HttpMethod.POST, "/api/user").hasAuthority("ROLE_ADMIN")
+                          .requestMatchers(HttpMethod.POST, "/api/user").permitAll()
                           .requestMatchers(HttpMethod.PUT, "/api/user/*").hasAuthority("ROLE_ADMIN")
                           .requestMatchers(HttpMethod.DELETE, "/api/user/*").hasAuthority("ROLE_ADMIN")
 
@@ -76,7 +76,7 @@ public class SecurityConfig {
                           .requestMatchers("/swagger-ui/index.html#/").permitAll()
                           .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
 
-
+//                        x.anyRequest().permitAll()
 
                 )
                 .sessionManagement( x -> x.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

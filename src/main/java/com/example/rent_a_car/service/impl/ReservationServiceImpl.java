@@ -6,12 +6,15 @@ import com.example.rent_a_car.entity.Car;
 import com.example.rent_a_car.entity.Reservation;
 import com.example.rent_a_car.entity.Users;
 import com.example.rent_a_car.exception.AlreadyExistException;
+import com.example.rent_a_car.exception.EmailNotSendException;
 import com.example.rent_a_car.exception.ResourceNotFoundException;
 import com.example.rent_a_car.mapper.ReservationMapper;
 import com.example.rent_a_car.repository.CarRepository;
 import com.example.rent_a_car.repository.ReservationRepository;
 import com.example.rent_a_car.repository.UserRepository;
 import com.example.rent_a_car.service.ReservationService;
+import com.example.rent_a_car.service.SendEmailService;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +35,7 @@ public class ReservationServiceImpl implements ReservationService {
     private final ReservationRepository reservationRepository;
     private final UserRepository userRepository;
     private final CarRepository carRepository;
+    private final SendEmailService sendEmailService;
     private final ReservationMapper reservationMapper;
 
     public List<ReservationResponse> getAll() {
@@ -48,7 +52,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     }
 
-    public ReservationResponse add(Long userId, Long carId, ReservationSaveRequest request) {
+    public ReservationResponse add(Long userId, Long carId, ReservationSaveRequest request) throws MessagingException {
         Users user = userRepository.findById(userId).orElseThrow(
                 () -> new ResourceNotFoundException(USER_NOT_FOUND)
         );
@@ -78,6 +82,23 @@ public class ReservationServiceImpl implements ReservationService {
             newReservation.setUser(user);
             newReservation.setPrice(price);
             reservationRepository.save(newReservation);
+
+            try{
+                sendEmailService.reservationMail(
+                        user.getEmail(),
+                        user.getFirstName(),
+                        car.getName() ,
+                        car.getBrand().getName() ,
+                        car.getGear().getName() ,
+                        startDate ,
+                        endDate ,
+                        price
+                );
+            }
+            catch (MessagingException e){
+                throw  new EmailNotSendException(EMAIL_COULD_NOT_SEND);
+            }
+
             return reservationMapper.toReservationResponse(newReservation);
         }
         else {

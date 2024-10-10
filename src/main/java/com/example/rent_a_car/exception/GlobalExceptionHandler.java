@@ -18,6 +18,31 @@ public class GlobalExceptionHandler {
                 .message(e.getMessage())
                 .build();
     }
+    @ExceptionHandler(value = {AlreadyExistException.class})
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorDto handleAlreadyExistException(AlreadyExistException e) {
+        return ErrorDto.builder()
+                .code(HttpStatus.CONFLICT.getReasonPhrase())
+                .message(e.getMessage())
+                .build();
+    }
+
+    @ExceptionHandler(value = {FieldsEmptyException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorDto handleFieldNotEmptyException(FieldsEmptyException e) {
+        return ErrorDto.builder()
+                .code(HttpStatus.BAD_REQUEST.getReasonPhrase())
+                .message(e.getMessage())
+                .build();
+    }
+    @ExceptionHandler(value = {EmailNotSendException.class})
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorDto handleFieldNotEmptyException(EmailNotSendException e) {
+        return ErrorDto.builder()
+                .code(HttpStatus.BAD_REQUEST.getReasonPhrase())
+                .message(e.getMessage())
+                .build();
+    }
 
     @Builder
     @Data

@@ -7,7 +7,10 @@ import com.example.rent_a_car.exception.ResourceNotFoundException;
 import com.example.rent_a_car.mapper.CarMapper;
 import com.example.rent_a_car.repository.*;
 import com.example.rent_a_car.service.CarService;
+import com.example.rent_a_car.utils.CarSpecificationUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +26,7 @@ public class CarServiceImpl implements CarService {
     private final CarMapper carMapper;
     private final BrandRepository brandRepository;
     private final CategoryRepository categoryRepository;
+    private final CarSpecificationUtils carSpecificationUtils;
     private final GearRepository gearRepository;
     private final FuelRepository fuelRepository;
 
@@ -34,22 +38,28 @@ public class CarServiceImpl implements CarService {
     }
 
     public List<CarResponse> getActiveCars() {
-        List<Car> activeCarList = carRepository.getActiveCars()
-                .orElseThrow(() -> new ResourceNotFoundException(CAR_NOT_FOUND));
-
-        return activeCarList.stream()
-                .map(carMapper :: toCarResponse)
-                .collect(Collectors.toList());
+//        List<Car> activeCarList = carRepository.getActiveCars()
+//                .orElseThrow(() -> new ResourceNotFoundException(CAR_NOT_FOUND));
+//
+//        return activeCarList.stream()
+//                .map(carMapper :: toCarResponse)
+//                .collect(Collectors.toList());
+        Specification<Car> carSpecification = carSpecificationUtils.filterByStatus(1);
+        List<Car> activeCarList = carRepository.findAll(carSpecification , Sort.by("name"));
+        return activeCarList.stream().map(carMapper::toCarResponse).collect(Collectors.toList());
 
     }
 
     public List<CarResponse> getNonActiveCars() {
-        List<Car> nonActiveCarList = carRepository.getNonActiveCars()
-                .orElseThrow(() -> new ResourceNotFoundException(CAR_NOT_FOUND));
-
-        return nonActiveCarList.stream()
-                .map(carMapper :: toCarResponse)
-                .collect(Collectors.toList());
+//        List<Car> nonActiveCarList = carRepository.getNonActiveCars()
+//                .orElseThrow(() -> new ResourceNotFoundException(CAR_NOT_FOUND));
+//
+//        return nonActiveCarList.stream()
+//                .map(carMapper :: toCarResponse)
+//                .collect(Collectors.toList());
+        Specification<Car> carSpecification = carSpecificationUtils.filterByStatus(0);
+        List<Car> activeCarList = carRepository.findAll(carSpecification , Sort.by("name"));
+        return activeCarList.stream().map(carMapper::toCarResponse).collect(Collectors.toList());
     }
 
     public CarResponse findById(Long id) {
@@ -167,5 +177,4 @@ public class CarServiceImpl implements CarService {
         carRepository.save(car);
         return carMapper.toCarResponse(car);
     }
-
 }

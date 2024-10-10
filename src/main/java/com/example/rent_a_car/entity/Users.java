@@ -50,13 +50,14 @@ public class Users {
      @Column(name = "password", nullable = false, length = 120)
      private String password;
 
-     @ManyToMany(fetch = FetchType.EAGER)
+//     @ManyToMany(fetch = FetchType.EAGER)
+     @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
      @JoinTable(
              name = "user_roles" ,
              joinColumns = @JoinColumn(name = "user_id"),
              inverseJoinColumns = @JoinColumn(name = "role_id")
      )
-     @Cascade(org.hibernate.annotations.CascadeType.ALL)
+//     @Cascade( CascadeType.PERSIST, CascadeType.MERGE )
      private Set<Role> roles = new HashSet<>();
 
 }

@@ -24,8 +24,9 @@ public class CarController {
 
     @GetMapping("/active-cars")
     public ResponseEntity<List<CarResponse>> getActiveCars(){
-        List<CarResponse> activeCars = carService.getActiveCars();
-        return ResponseEntity.ok(activeCars);
+//        List<CarResponse> activeCars = carService.getActiveCars();
+//        return ResponseEntity.ok(activeCars);
+        return  ResponseEntity.ok(carService.getActiveCars());
     }
     @GetMapping("/non-active-cars")
     public ResponseEntity<List<CarResponse>> getNonActiveCars(){

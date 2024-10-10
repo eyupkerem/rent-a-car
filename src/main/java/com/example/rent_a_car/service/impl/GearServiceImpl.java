@@ -11,8 +11,11 @@ import com.example.rent_a_car.mapper.GearMapper;
 import com.example.rent_a_car.repository.GearRepository;
 import com.example.rent_a_car.service.GearService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,6 +23,7 @@ import static com.example.rent_a_car.utils.Validations.*;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class GearServiceImpl implements GearService {
     private final GearRepository gearRepository;
     private final GearMapper gearMapper;
@@ -29,6 +33,7 @@ public class GearServiceImpl implements GearService {
                 return gearList.stream()
                         .map(gearMapper :: toGearResponse)
                         .collect(Collectors.toList());
+
     }
 
     public GearResponse findById(Long id) {
